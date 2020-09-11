@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" type="text/css" href="main.css">
+  </head>
+  <body>
+    <h1 class="c">Meteor-Tool</h1>
+    <p class="c">
+      This site uses NASA's <a href="https://nasa.github.io/data-nasa-gov-frontpage/" target="_blank">Open Data Portal</a> to access data on all of the meteorite landings in the United States.<br>
+      This website takes you location and gives you a list of all of the meteorites that have fallen within a certain radius of your current location.<br>
+      After you input your desired radius, and click the "Get List" button. Your browser will ask for your location, and after a minute you will get your list.
+    </p>
+    <form id="form">
+      <ul class="list">
+	<li class="listitem">
+          <label for="radius">Radius (km)</label>
+	</li>
+	<li class="listitem">
+          <input type="number" name="radius" required>
+	</li>
+	<li class="listitem">
+          <button id="sub" type="submit">Get List</button>
+	</li>
+      </ul>
+    </form>
+    <script type="text/javascript" src="index.js" async>
+      </body>
+    </html>
