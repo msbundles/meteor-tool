@@ -10,7 +10,7 @@ function deg2rad(deg) {
     return deg * (Math.PI/180)
 }
 
-function getDistanceKm(let lat1,let lon1,let lat2,let lon2) {
+function getDistanceKm(lat1,lon1,lat2,lon2) {
     let R = 6371;
     let dLat = deg2rad(lat2-lat1);
     let dLon = deg2rad(lon2-lon1);
@@ -28,6 +28,32 @@ function error() {
     status.textContent = 'Unable to retrieve your location';
 }
 
+function success(position) {
+    const ylatitude  = position.coords.latitude;
+    const ylongitude = position.coords.longitude;
+    let data = JSON.parse(request.response);
+    let table = document.getElementById('out-tbl');
+    for (let i = 0; i < data.length; i++){
+	var obj = data[i];
+	if (getDistanceKm(ylatitude,ylongitude,obj.reclat,obj.reclong) <= input.value){
+	    //Some way to get a list of meteors to the user.
+	    var list = [];
+	    list.push(i);
+	    for (let ii = 0; ii < 9; ii++) {
+		let row = table.insertRow(0);
+		row.insertCell(ii).innerHTML = obj.name;
+		row.insertCell(ii).innerHTML = obj.id;
+		row.insertCell(ii).innerHTML = obj.nametype;
+		row.insertCell(ii).innerHTML = obj.recclass;
+		row.insertCell(ii).innerHTML = obj.mass;
+		row.insertCell(ii).innerHTML = obj.fall;
+		row.insertCell(ii).innerHTML = obj.year;
+		row.insertCell(ii).innerHTML = obj.reclat;
+	    }
+	}
+    }
+}
+
 form.addEventListener('submit', event => {
     event.preventDefault();
     request.open('GET', url, true);
@@ -37,17 +63,7 @@ form.addEventListener('submit', event => {
 	    alert('Geolocation is not supported by your browser');
 	} else {
 	    //If it is, get the lat and long and parse the json
-	    navigator.geolocation.getCurrentPosition(success => {
-		const ylatitude  = position.coords.latitude;
-		const ylongitude = position.coords.longitude;
-		let data = JSON.parse(request.response);
-		for (var i = 0; i < data.length; i++){
-		    var obj = data[i];
-		    if (getDistanceKm(ylatitude,ylongitude,obj.reclat,obj.reclong) <= input.value){
-			//Some way to get a list of meteors to the user.
-		    }
-		}
-	    }, error);
+	    navigator.geolocation.getCurrentPosition(success, error);
 	}
     }
     request.send();
