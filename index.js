@@ -35,11 +35,17 @@ function success(position) {
     let table = document.getElementById('out-tbl');
     for (let i = 0; i < data.length; i++){
 	var obj = data[i];
-	if (getDistanceKm(ylatitude,ylongitude,obj.reclat,obj.reclong) <= input.value){
+	console.log('Data iteration loop ran');
+	let dist = getDistanceKm(ylatitude,ylongitude,obj.reclat,obj.reclong);
+	console.log(dist);
+	if (dist > input.value){
+	    console.log('There are meteors in selected the radius');
 	    //Some way to get a list of meteors to the user.
 	    var list = [];
 	    list.push(i);
+	    console.log(list);
 	    for (let ii = 0; ii < 9; ii++) {
+		console.log('Table insertion loop ran');
 		let row = table.insertRow(0);
 		row.insertCell(ii).innerHTML = obj.name;
 		row.insertCell(ii).innerHTML = obj.id;
@@ -50,6 +56,9 @@ function success(position) {
 		row.insertCell(ii).innerHTML = obj.year;
 		row.insertCell(ii).innerHTML = obj.reclat;
 	    }
+	}
+	else {
+	    console.log('There are no meteors in the radius');
 	}
     }
 }
