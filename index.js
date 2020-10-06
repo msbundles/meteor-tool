@@ -28,24 +28,27 @@ function error() {
     status.textContent = 'Unable to retrieve your location';
 }
 
+const sleep = (milliseconds) => {
+  return new Promise(resolve => setTimeout(resolve, milliseconds))
+}
+
 function success(position) {
     const ylatitude  = position.coords.latitude;
     const ylongitude = position.coords.longitude;
     let data = JSON.parse(request.response);
     for (let i = 0; i < data.length; i++){
-	var obj = data[i];
 	console.log('Data iteration loop ran');
-	let dist = getDistanceKm(ylatitude,ylongitude,obj.reclat,obj.reclong);
+	let dist = getDistanceKm(ylatitude,ylongitude,data[i].reclat,data[i].reclong);
 	console.log(dist);
 	if (dist < input.value){
 	    console.log(data[i]);
 	    console.log('There are meteors in selected the radius');
 	    //Some way to get a list of meteors to the user.
-	    $("#datatable").append(`<tr><td>${obj.name}</td>${obj.id}<td>${obj.nametype}</td>${obj.recclass}<td>${obj.mass}</td>${obj.fall}<td>${obj.year}</td><td>${obj.reclat}</td></tr>`);
+	    $("#datatable").append(`<tr><td>${data[i].name}</td>${data[i].id}<td>${data[i].nametype}</td>${data[i].recclass}<td>${data[i].mass}</td>${data[i].fall}<td>${data[i].year}</td><td>${data[i].reclat}</td></tr>`);
 	}
 	else {
 	    console.log('There are no meteors in the radius');
-	}
+	} 
     }
 }
 
