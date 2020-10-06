@@ -44,7 +44,15 @@ function success(position) {
 	    console.log(data[i]);
 	    console.log('There are meteors in selected the radius');
 	    //Some way to get a list of meteors to the user.
-	    $("#datatable").append(`<tr><td>${data[i].name}</td>${data[i].id}<td>${data[i].nametype}</td>${data[i].recclass}<td>${data[i].mass}</td>${data[i].fall}<td>${data[i].year}</td><td>${data[i].reclat}</td></tr>`);
+	    $("#datatable").append(`
+<tr>
+  <td>${data[i].name}</td>
+  <td>${data[i].mass}</td>
+  <td>${data[i].year}</td>
+  <td>${data[i].reclat}</td>
+  <td>${data[i].reclong}</td>
+</tr>
+`);
 	}
 	else {
 	    console.log('There are no meteors in the radius');
