@@ -62,6 +62,7 @@ function success(position) {
 
 form.addEventListener('submit', event => {
     event.preventDefault();
+    $("#datatable td").parent().remove();
     request.open('GET', url, true);
     request.onload = function () {
 	//If geolocation not supported tell the user
