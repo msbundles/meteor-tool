@@ -25,13 +25,10 @@ function getDistanceKm(lat1,lon1,lat2,lon2) {
 
 //Function that runs when the geolocation fails
 function error() {
-    status.textContent = 'Unable to retrieve your location';
+    alert('Unable to retrieve your location');
 }
 
-const sleep = (milliseconds) => {
-  return new Promise(resolve => setTimeout(resolve, milliseconds))
-}
-
+//Function that runs when geolocation succeeds
 function success(position) {
     const ylatitude  = position.coords.latitude;
     const ylongitude = position.coords.longitude;
@@ -40,10 +37,11 @@ function success(position) {
 	console.log('Data iteration loop ran');
 	let dist = getDistanceKm(ylatitude,ylongitude,data[i].reclat,data[i].reclong);
 	console.log(dist);
+	//Checking if the meteor is within the radius
 	if (dist < input.value){
 	    console.log(data[i]);
 	    console.log('There are meteors in selected the radius');
-	    //Some way to get a list of meteors to the user.
+	    //Inserting the data into the table
 	    $("#datatable").append(`
 <tr>
   <td>${data[i].name}</td>
